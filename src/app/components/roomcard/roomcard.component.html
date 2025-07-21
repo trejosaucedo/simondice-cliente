@@ -1,0 +1,60 @@
+<!-- ===== ROOM CARD — estilo “spectre” blanco‑negro con halo fantasmal ===== -->
+<article
+  class="group relative flex items-center justify-between gap-6
+         rounded-2xl border border-white/15 bg-white/5
+         px-8 py-6 shadow-[0_4px_28px_rgba(255,255,255,0.06)]
+         backdrop-blur-[3px] transition
+         hover:shadow-[0_0_40px_6px_rgba(255,255,255,0.12)]
+         hover:bg-white/10"
+>
+  <!-- Información de la sala -->
+  <header>
+    <h2 class="text-lg font-semibold text-white mb-1 tracking-wide">
+      {{ room.name }}
+    </h2>
+
+    <p class="text-xs text-white/60">
+      Colores:
+      <span class="font-medium text-white/85">{{ room.colors }}</span>
+    </p>
+
+    <p class="text-xs text-white/60">
+      Jugadores:
+      <span class="font-medium text-white/85">
+        {{ room.players }}/{{ room.maxPlayers }}
+      </span>
+    </p>
+  </header>
+
+  <!-- CTA -->
+  <div>
+    @if (room.players < room.maxPlayers) {
+      <button
+        class="inline-flex items-center justify-center gap-2
+               rounded-xl bg-white/10
+               px-6 py-2 text-sm font-bold text-white
+               shadow-[0_0_16px_rgba(255,255,255,0.18)]
+               transition hover:bg-white/20
+               focus:outline-none focus:ring-2 focus:ring-white/40"
+        (click)="join.emit(room)"
+      >
+        Unirse
+      </button>
+    } @else {
+      <span
+        class="inline-block rounded-xl bg-white/7 px-6 py-2
+               text-sm font-bold text-white/35 border border-white/15
+               select-none cursor-not-allowed"
+      >
+        Sala llena
+      </span>
+    }
+  </div>
+
+  <!-- Halo fantasmal al pasar el cursor -->
+  <span
+    class="pointer-events-none absolute inset-0 -z-10 rounded-2xl
+           opacity-0 transition group-hover:opacity-100
+           group-hover:shadow-[0_0_60px_14px_rgba(255,255,255,0.08)]"
+  ></span>
+</article>

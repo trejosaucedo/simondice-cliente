@@ -1,0 +1,113 @@
+<div class="flex min-h-screen w-full items-center justify-center">
+  <form
+    class="w-full max-w-md bg-white/5 backdrop-blur-2xl p-10 md:p-12 rounded-3xl
+           shadow-[0_8px_50px_0px_rgba(255,255,255,0.11)]
+           border border-white/10 flex flex-col gap-8"
+    autocomplete="off"
+    [formGroup]="registerForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+  >
+    <!-- Título Glow -->
+    <h2 class="text-4xl md:text-5xl font-extrabold text-center text-white tracking-widest mb-2 drop-shadow-[0_2px_24px_rgba(255,255,255,0.22)]">
+      Crear cuenta
+    </h2>
+
+    <!-- Nombre -->
+    <div class="flex flex-col gap-1.5">
+      <label for="name" class="text-sm font-semibold text-white/80">
+        Nombre completo
+      </label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="rounded-xl px-4 py-3 bg-white/10 border border-white/20
+               focus:border-white/70 focus:ring-2 focus:ring-white/25 text-white
+               placeholder:text-white/20 outline-none transition-all backdrop-blur"
+        placeholder="Nombre completo"
+        autocomplete="name"
+      />
+      @if (fieldErrors['name']) {
+        <span class="text-xs text-red-400 mt-0.5 drop-shadow-[0_0_16px_rgba(255,50,60,0.65)]">
+          • {{ fieldErrors['name'] }}
+        </span>
+      }
+    </div>
+
+    <!-- Email -->
+    <div class="flex flex-col gap-1.5">
+      <label for="email" class="text-sm font-semibold text-white/80">
+        Correo electrónico
+      </label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="rounded-xl px-4 py-3 bg-white/10 border border-white/20
+               focus:border-white/70 focus:ring-2 focus:ring-white/25 text-white
+               placeholder:text-white/20 outline-none transition-all backdrop-blur"
+        placeholder="Correo electrónico"
+        autocomplete="email"
+      />
+      @if (fieldErrors['email']) {
+        <span class="text-xs text-red-400 mt-0.5 drop-shadow-[0_0_16px_rgba(255,50,60,0.65)]">
+          • {{ fieldErrors['email'] }}
+        </span>
+      }
+    </div>
+
+    <!-- Password -->
+    <div class="flex flex-col gap-1.5">
+      <label for="password" class="text-sm font-semibold text-white/80">
+        Contraseña
+      </label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="rounded-xl px-4 py-3 bg-white/10 border border-white/20
+               focus:border-white/70 focus:ring-2 focus:ring-white/25 text-white
+               placeholder:text-white/20 outline-none transition-all backdrop-blur"
+        placeholder="••••••••"
+        autocomplete="new-password"
+      />
+      @if (fieldErrors['password']) {
+        <span class="text-xs text-red-400 mt-0.5 drop-shadow-[0_0_16px_rgba(255,50,60,0.65)]">
+        • {{ fieldErrors['password'] }}
+        </span>
+
+      }
+    </div>
+
+    <!-- Botón de registro Glow -->
+    <button
+      type="submit"
+      class="mt-2 bg-white/20 text-white font-bold py-3 rounded-2xl
+             shadow-[0_0_48px_0px_rgba(255,255,255,0.19)]
+             border border-white/20 hover:bg-white/30 transition-all tracking-wider
+             disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-xl"
+      [disabled]="loading"
+    >
+      {{ loading ? 'Registrando…' : 'Registrarse' }}
+    </button>
+
+    <!-- Enlace a login -->
+    <div class="flex flex-col items-center mt-3">
+      <span class="text-sm text-white/60">¿Ya tienes cuenta?</span>
+      <a
+        routerLink="/login"
+        class="mt-1 font-semibold text-white/80 hover:text-white transition underline underline-offset-4"
+      >
+        Iniciar sesión
+      </a>
+    </div>
+
+    <!-- Error general -->
+    @if (error) {
+      <div class="mt-4 text-center text-red-400 text-sm max-w-xs mx-auto">
+        {{ error }}
+      </div>
+    }
+  </form>
+</div>

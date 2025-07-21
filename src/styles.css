@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+/* Scrollbar fantasma blanco‑negro */
+.rooms-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+.rooms-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);          /* pista tenue */
+  border-radius: 4px;
+}
+.rooms-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);          /* pulgar gris‑blanco */
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.25); /* glow suave */
+}
+.rooms-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);           /* un poco más brillante al hover */
+}
+
+/* Firefox */
+.rooms-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.25) rgba(255,255,255,0.04);
+}

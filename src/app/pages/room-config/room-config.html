@@ -1,0 +1,75 @@
+<!-- Overlay translúcido -->
+<div class="fixed inset-0 -z-10 bg-black/60 backdrop-blur-sm"></div>
+
+<div class="flex flex-col items-center gap-10 text-white w-[90vw] max-w-2xl">
+  <!-- Nombre -->
+  <div class="w-full">
+    <label class="block mb-2 text-sm font-medium">Nombre de la sala</label>
+    <input
+      type="text"
+      placeholder="Ej. Sala Pro"
+      class="w-full rounded bg-white/10 border border-white/20 px-4 py-2
+             focus:outline-none focus:border-white/40"
+      [ngModel]="name()"
+      (ngModelChange)="name.set($event)"
+    />
+  </div>
+
+  <!-- Cantidad -->
+  <div class="text-center space-y-4">
+    <label class="block text-sm font-medium">Cantidad de colores</label>
+    <input
+      type="range"
+      min="3"
+      max="16"
+      step="1"
+      class="accent-white w-72"
+      [ngModel]="cantidad()"
+      (ngModelChange)="cantidad.set($event)"
+    />
+    <div class="text-xl font-bold">
+      {{ cantidad() }}
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div
+    class="grid gap-2 mx-auto"
+    [ngStyle]="{
+      'grid-template-columns':
+        'repeat(' + grid().cols + ', 2.75rem)'
+    }"
+  >
+    @for (c of colores(); track $index; let idx = $index) {
+      <label
+        class="relative block w-full pt-[100%] rounded-md
+               border border-white/25 cursor-pointer
+               hover:shadow-[0_0_18px_rgba(255,255,255,0.18)]"
+        [style.background]="c.hex || 'transparent'"
+      >
+        <input
+          type="color"
+          class="absolute inset-0 opacity-0 cursor-pointer"
+          [value]="c.hex || '#ffffff'"
+          (change)="setColor(idx, $any($event.target).value)"
+        />
+      </label>
+    } @empty {
+      <p class="text-white/50 col-span-full text-center">
+        Sin celdas por mostrar
+      </p>
+    }
+  </div>
+
+  <!-- Crear -->
+  <button
+    (click)="create()"
+    [disabled]="!allSelected() || loading()"
+    class="mt-6 px-10 py-3 rounded-xl bg-white/15 border border-white/20
+         font-bold transition hover:bg-white/25
+         disabled:opacity-40 disabled:cursor-not-allowed"
+  >
+    {{ loading() ? 'Creando…' : 'Crear sala' }}
+  </button>
+
+</div>

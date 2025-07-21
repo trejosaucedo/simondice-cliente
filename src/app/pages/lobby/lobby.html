@@ -1,0 +1,51 @@
+<!-- lobby.html -->
+<section class="relative z-10 w-full flex justify-center items-center px-4 pb-16">
+  <div class="relative w-[60vw] h-[80vh] rounded-2xl overflow-hidden">
+    <div
+      class="rooms-scroll relative w-full h-full overflow-auto
+             bg-[#0d0d0d]/80 backdrop-blur-sm
+             border border-white/10
+             shadow-[0_0_60px_rgba(0,0,0,0.55)]
+             px-6 py-10 md:px-16 md:py-16"
+    >
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white text-center mb-12">
+        Salas disponibles
+      </h1>
+
+      <div class="flex flex-col items-center gap-y-8">
+        @if (rooms$ | async; as rooms) {
+          @for (room of rooms; track room.id) {
+            <app-room-card
+              class="w-full max-w-xl transition
+                     bg-white/5 border border-white/10
+                     shadow-[0_0_32px_rgba(255,255,255,0.09)]
+                     rounded-xl hover:bg-white/10 hover:shadow-lg
+                     p-4"
+              [room]="room"
+              (join)="joinRoom(room)"
+            ></app-room-card>
+          } @empty {
+            <div class="text-white/60 text-center py-16">
+              No hay salas. ¡Crea la primera!
+            </div>
+          }
+        } @else {
+          <div class="text-white/50 text-center py-16">Cargando salas…</div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTÓN FLOTANTE: CREAR SALA -->
+  <a
+    routerLink="/room-config"
+    aria-label="Crear sala"
+    class="fixed bottom-6 right-6 z-50 flex items-center justify-center
+           w-14 h-14 rounded-full bg-white/10 border border-white/25
+           text-3xl font-bold text-white hover:bg-white/20
+           shadow-[0_0_30px_rgba(255,255,255,0.18)]
+           transition"
+  >
+    +
+  </a>
+</section>

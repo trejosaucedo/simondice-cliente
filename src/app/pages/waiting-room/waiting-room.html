@@ -1,0 +1,105 @@
+<!-- Fondo -->
+<div class="fixed inset-0 -z-10 bg-black/60 backdrop-blur-sm"></div>
+
+<div class="rooms-scroll w-[95vw] h-[90vh] overflow-y-auto rounded-2xl bg-[#0d0d0d]/80 border border-white/10 shadow-[0_0_60px_rgba(0,0,0,0.55)] flex flex-col items-center px-16 pt-12 pb-20 text-white">
+  @if (room() !== null) {
+    <!-- Nombre de sala -->
+    <h1 class="text-4xl font-extrabold text-center mb-10 drop-shadow-[0_3px_24px_rgba(255,255,255,0.18)]">
+      {{ room()?.name }}
+    </h1>
+
+    <!-- Jugadores -->
+    <div class="flex justify-center gap-24 mb-12">
+      <!-- Host -->
+      <div class="text-center space-y-2">
+        <p class="text-sm text-white/60">Anfitrión</p>
+        <div class="w-20 h-20 rounded-full bg-green-500/70 flex items-center justify-center text-3xl font-semibold">
+          {{ room()?.hostPlayerName?.[0]?.toUpperCase() || '--' }}
+        </div>
+        <div class="text-white/90 font-medium text-lg mt-1">
+          {{ room()?.hostPlayerName || '---' }}
+          @if (userId() === room()?.hostPlayerId) {
+            <span class="text-white/60 text-sm">(Tú)</span>
+          }
+        </div>
+      </div>
+
+      <!-- Jugador 2 -->
+      <div class="text-center space-y-2">
+        <p class="text-sm text-white/60">Jugador 2</p>
+        <div
+          class="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-semibold transition"
+          [ngClass]="{
+            'bg-white/15': !room()?.secondPlayerName,
+            'bg-green-500/70': room()?.secondPlayerName
+          }"
+        >
+          {{ room()?.secondPlayerName?.[0]?.toUpperCase() || '?' }}
+        </div>
+        <div class="text-white/90 font-medium text-lg mt-1">
+          {{ room()?.secondPlayerName || '---' }}
+          @if (userId() === room()?.secondPlayerId) {
+            <span class="text-white/60 text-sm">(Tú)</span>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de colores -->
+    <div
+      class="grid gap-3 mb-16"
+      [ngStyle]="{
+        'grid-template-columns': 'repeat(' + cols() + ', 5rem)',
+        'grid-template-rows': 'repeat(' + rows() + ', 5rem)'
+      }"
+    >
+      @for (cell of room()!.colorsConfig; track cell.x + '-' + cell.y) {
+        <div
+          class="rounded-md border border-white/20 shadow-[0_0_16px_rgba(255,255,255,0.12)]"
+          [style.background]="cell.hex.startsWith('#') ? cell.hex : ('#' + cell.hex)"
+          [style.gridColumn]="cell.x"
+          [style.gridRow]="cell.y"
+        ></div>
+      }
+    </div>
+
+    <!-- Estado / botones -->
+    <div class="text-center space-y-6">
+      @if (room()?.status === 'waiting') {
+        <p class="text-white/70 text-lg">Esperando a que el anfitrión inicie la partida…</p>
+      }
+
+      @if (canStartGame()) {
+        <button
+          class="px-10 py-3 rounded-xl bg-white/15 border border-white/20 text-lg font-bold hover:bg-white/25 transition"
+          (click)="startGame()"
+        >
+          Iniciar partida
+        </button>
+      }
+
+      @if (isHost()) {
+        <button
+          class="px-10 py-3 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition"
+          (click)="cancelRoom()"
+        >
+          Cancelar sala
+        </button>
+      }
+
+      @if (isSecond()) {
+        <button
+          class="px-10 py-3 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition"
+          (click)="leaveRoom()"
+        >
+          Salir de sala
+        </button>
+      }
+    </div>
+  }
+  @else {
+    <div class="flex-1 flex items-center justify-center text-white/50 text-xl">
+      Cargando sala…
+    </div>
+  }
+</div>

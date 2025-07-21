@@ -1,0 +1,46 @@
+<div
+  class="fixed inset-0 w-full h-screen flex items-center justify-center overflow-hidden select-none z-0"
+  style="background: url('/background.png') center center / contain no-repeat #000000;"
+>
+  <!-- Logo Rubik Glow, animado y más impactante -->
+  <a
+    routerLink="/"
+    class="fixed top-10 left-10 z-20 transition-transform duration-200 hover:scale-110 active:scale-95 group"
+    aria-label="Ir a inicio"
+    tabindex="0"
+  >
+    <svg viewBox="0 0 240 240" width="140" height="140" fill="none" xmlns="http://www.w3.org/2000/svg"
+         class="drop-shadow-[0_0_50px_rgba(255,255,255,0.22)] animate-pulse group-hover:drop-shadow-[0_0_90px_rgba(255,255,255,0.35)] transition-all duration-300">
+      <defs>
+        <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="12" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <linearGradient id="cube-face" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#c3c3c3" stop-opacity="0.22"/>
+        </linearGradient>
+      </defs>
+      <g filter="url(#glow)">
+        <polygon points="70,50 120,30 170,50 120,70" fill="url(#cube-face)" stroke="#fff" stroke-width="2"/>
+        <polygon points="70,50 70,100 120,120 120,70" fill="url(#cube-face)" stroke="#fff" stroke-width="2"/>
+        <polygon points="170,50 170,100 120,120 120,70" fill="url(#cube-face)" stroke="#fff" stroke-width="2"/>
+        <polyline points="70,66 70,116 120,136" stroke="#fff" stroke-opacity="0.35" stroke-width="1"/>
+        <polyline points="70,82 70,132 120,152" stroke="#fff" stroke-opacity="0.20" stroke-width="1"/>
+        <line x1="70" y1="100" x2="120" y2="120" stroke="#fff" stroke-opacity="0.5" stroke-width="1"/>
+        <line x1="87" y1="108" x2="120" y2="120" stroke="#fff" stroke-opacity="0.25" stroke-width="1"/>
+        <polyline points="170,66 170,116 120,136" stroke="#fff" stroke-opacity="0.35" stroke-width="1"/>
+        <polyline points="170,82 170,132 120,152" stroke="#fff" stroke-opacity="0.20" stroke-width="1"/>
+        <line x1="170" y1="100" x2="120" y2="120" stroke="#fff" stroke-opacity="0.5" stroke-width="1"/>
+        <line x1="153" y1="108" x2="120" y2="120" stroke="#fff" stroke-opacity="0.25" stroke-width="1"/>
+      </g>
+    </svg>
+  </a>
+
+  <div class="relative z-10 flex flex-col items-center justify-center text-center w-full h-screen">
+    <router-outlet></router-outlet>
+  </div>
+</div>
